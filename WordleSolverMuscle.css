@@ -1,5 +1,5 @@
 .container{ /*Container CLASS*/
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     display: flex;
     align-items: center;
     width: 100%;
@@ -10,6 +10,7 @@
     font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
     margin-left: 2vw;
     margin-right: 2vw;
+    background-color: rgb(58, 58, 58);   /* This is deleted when copied to Weebly. Background needs to be transparent. */
   }
   
     #title{  /*Title ID*/
@@ -40,7 +41,7 @@
       
   }
   
-  #inputTEXT{
+  #inputTEXT{  /* This is the textbox ID */
       font-size: min(25px,3.75vw);
       color: rgb(0, 0, 0);
       width: min(200px,40vw);
