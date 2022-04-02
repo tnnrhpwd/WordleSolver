@@ -16,6 +16,7 @@
 #title{  /* Title ID */
   font-size: min(40px,5vw);
   font-weight: bold;
+  text-align: center;
 }
   
 #description{  /*description ID*/
