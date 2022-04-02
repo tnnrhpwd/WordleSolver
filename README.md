@@ -9,14 +9,10 @@ The main goal of this file is to output a list of words that matches the user's 
 
 The HTML page loads. The javscript file is executed. Initialize() creates the starting elements on the page, while also initializing the input collecting methods. 
 
-The first word is typed into the textbox. Either press the Run button or press your enter key. Enter the #1 word results replacing green, orange, and black with 123 respectively. 
-
-                Green=  F        H
-For example,    Orange=   O    E   E   D   would be 12321232.
-                Black=       R       A
+The guess word is typed into the textbox. Either press the Run button or press your enter key. Enter the word results replacing green, orange, and black with 123 respectively. For example, if the guess was 'guess' and all the letters were correct, then the results input would be '11111'. If all the letters were wrong, the input would be '33333'.
 
 Press run or your Enter key again. The list of potential words is printed. Type one of these words into the textbox and your game. 
-Repeat these steps until your either win or lose your game.
+Repeat these steps until you either win or lose your game.
 
 
 [View website](https://sthopwood.weebly.com/wordlesolver.html)
