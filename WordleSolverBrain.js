@@ -5,18 +5,22 @@ let instruction= document.getElementById("instruction");
 let inputs= document.getElementById("inputs");
 let button= document.getElementById("button");
 let output= document.getElementById("output");
-// assign objects for HTML input
-let inputTEXT= document.getElementById("inputTEXT")
-var form = document.getElementById('form');
-// variables
-var inputString; // variable for textbox value 
-var buttonPressNum=0; // what number button press
-var wordNum=1;  // what number word needs inputting
-var wordLength; // word length
-var wordArray=[]; // array filled with possible words from dictionary.
-let guessWord=""; // number input from each guess result
 
-// this is an array filed with dictionary words. I tried importing the document, but this file could not read it from inside the Weebly library fro some reason. Furthermore, this data would have had to be loaded anyway when the program executes.
+// Listen for key presses
+document.addEventListener('keypress', function() {submitForm(event)}, false); //listens for key presses when window active.
+
+// Declare and Initiate variables
+var inputString; // variable used to catch inputstring
+let guessWord=""; // variable used to store word guessed
+let guessResult;     // variable used to store numbers returned
+
+var buttonPressNum=0; // what number button press - incremented 
+var wordNum=1;  // how many words have been guessed
+var wordLength; // length of answer string
+var wordArray=[]; // array of possible answers - filled on first button press - filtered every EVEN button press.
+let neededChars =[]; // characters that are definitely in the answer
+
+// Dictionary array - Unprofessional but scanning data from file online is more work than this hobby project demands.
 const DICTIONARY = [
 
     "AA","AAH","AAHED","AAHING","AAHS","AAL","AALII","AALIIS","AALS","AARDVARK","AARDVARKS","AARDWOLF","AARDWOLVES","AARGH","AARRGH","AARRGHH","AAS","AASVOGEL","AASVOGELS","AB","ABA","ABACA","ABACAS","ABACI","ABACK","ABACTERIAL","ABACUS","ABACUSES","ABAFT","ABAKA","ABAKAS","ABALONE","ABALONES","ABAMP","ABAMPERE","ABAMPERES","ABAMPS","ABANDON","ABANDONED","ABANDONER","ABANDONERS","ABANDONING","ABANDONMENT","ABANDONMENTS","ABANDONS","ABAPICAL","ABAS","ABASE","ABASED","ABASEDLY","ABASEMENT","ABASEMENTS","ABASER","ABASERS","ABASES","ABASH","ABASHED","ABASHEDLY","ABASHES","ABASHING","ABASHMENT","ABASHMENTS","ABASIA","ABASIAS","ABASING","ABATABLE","ABATE","ABATED","ABATEMENT","ABATEMENTS","ABATER","ABATERS","ABATES","ABATING","ABATIS","ABATISES","ABATOR","ABATORS","ABATTIS","ABATTISES","ABATTOIR","ABATTOIRS","ABAXIAL","ABAXILE","ABAYA","ABAYAS","ABBA","ABBACIES","ABBACY","ABBAS","ABBATIAL","ABBE","ABBES","ABBESS","ABBESSES","ABBEY","ABBEYS","ABBOT","ABBOTCIES","ABBOTCY","ABBOTS","ABBOTSHIP","ABBOTSHIPS","ABBREVIATE","ABBREVIATED","ABBREVIATES","ABBREVIATING","ABBREVIATION","ABBREVIATIONS","ABBREVIATOR","ABBREVIATORS","ABCOULOMB","ABCOULOMBS","ABDICABLE","ABDICATE","ABDICATED","ABDICATES","ABDICATING","ABDICATION","ABDICATIONS","ABDICATOR","ABDICATORS","ABDOMEN","ABDOMENS","ABDOMINA","ABDOMINAL","ABDOMINALLY","ABDOMINALS","ABDUCE","ABDUCED","ABDUCENS","ABDUCENT","ABDUCENTES","ABDUCES","ABDUCING","ABDUCT","ABDUCTED","ABDUCTEE","ABDUCTEES","ABDUCTING","ABDUCTION","ABDUCTIONS","ABDUCTOR","ABDUCTORES","ABDUCTORS","ABDUCTS","ABEAM","ABECEDARIAN","ABECEDARIANS","ABED","ABEGGING","ABELE","ABELES","ABELIA","ABELIAN","ABELIAS","ABELMOSK","ABELMOSKS","ABERRANCE","ABERRANCES","ABERRANCIES","ABERRANCY","ABERRANT","ABERRANTLY","ABERRANTS","ABERRATED","ABERRATION","ABERRATIONAL","ABERRATIONS","ABET","ABETMENT","ABETMENTS","ABETS","ABETTAL","ABETTALS","ABETTED","ABETTER","ABETTERS","ABETTING","ABETTOR","ABETTORS","ABEYANCE","ABEYANCES","ABEYANCIES","ABEYANCY","ABEYANT","ABFARAD","ABFARADS","ABHENRIES","ABHENRY","ABHENRYS","ABHOR","ABHORRED","ABHORRENCE","ABHORRENCES","ABHORRENT","ABHORRENTLY","ABHORRER","ABHORRERS","ABHORRING","ABHORS","ABIDANCE","ABIDANCES","ABIDE","ABIDED","ABIDER","ABIDERS","ABIDES","ABIDING","ABIDINGLY","ABIGAIL","ABIGAILS","ABILITIES","ABILITY","ABIOGENESES","ABIOGENESIS","ABIOGENIC","ABIOGENICALLY","ABIOGENIST","ABIOGENISTS","ABIOLOGICAL","ABIOSES","ABIOSIS","ABIOTIC","ABIOTICALLY","ABJECT","ABJECTION","ABJECTIONS","ABJECTLY","ABJECTNESS","ABJECTNESSES","ABJURATION","ABJURATIONS","ABJURE","ABJURED","ABJURER","ABJURERS","ABJURES","ABJURING","ABLATE","ABLATED","ABLATES","ABLATING","ABLATION","ABLATIONS","ABLATIVE","ABLATIVELY","ABLATIVES","ABLATOR","ABLATORS","ABLAUT","ABLAUTS","ABLAZE","ABLE","ABLED","ABLEGATE","ABLEGATES","ABLEISM","ABLEISMS","ABLEIST","ABLEISTS","ABLER","ABLES","ABLEST","ABLINGS","ABLINS","ABLOOM","ABLUENT","ABLUENTS","ABLUSH","ABLUTED","ABLUTION","ABLUTIONARY","ABLUTIONS","ABLY","ABMHO","ABMHOS","ABNEGATE","ABNEGATED","ABNEGATES","ABNEGATING","ABNEGATION","ABNEGATIONS","ABNEGATOR","ABNEGATORS","ABNORMAL","ABNORMALITIES","ABNORMALITY","ABNORMALLY","ABNORMALS","ABNORMITIES","ABNORMITY","ABO","ABOARD","ABODE","ABODED","ABODES","ABODING","ABOHM","ABOHMS","ABOIDEAU","ABOIDEAUS","ABOIDEAUX","ABOIL","ABOITEAU","ABOITEAUS","ABOITEAUX","ABOLISH","ABOLISHABLE","ABOLISHED","ABOLISHER","ABOLISHERS","ABOLISHES","ABOLISHING","ABOLISHMENT","ABOLISHMENTS","ABOLITION","ABOLITIONARY","ABOLITIONISM","ABOLITIONISMS","ABOLITIONIST","ABOLITIONISTS","ABOLITIONS","ABOLLA","ABOLLAE","ABOMA","ABOMAS","ABOMASA","ABOMASAL","ABOMASI","ABOMASUM","ABOMASUS","ABOMINABLE","ABOMINABLY","ABOMINATE","ABOMINATED","ABOMINATES","ABOMINATING","ABOMINATION","ABOMINATIONS","ABOMINATOR","ABOMINATORS","ABOON","ABORAL","ABORALLY","ABORIGINAL","ABORIGINALLY","ABORIGINALS","ABORIGINE","ABORIGINES","ABORNING","ABORT","ABORTED","ABORTER","ABORTERS","ABORTIFACIENT","ABORTIFACIENTS","ABORTING","ABORTION","ABORTIONIST","ABORTIONISTS","ABORTIONS","ABORTIVE","ABORTIVELY","ABORTIVENESS","ABORTIVENESSES","ABORTS","ABORTUS","ABORTUSES","ABOS","ABOUGHT","ABOULIA","ABOULIAS","ABOULIC","ABOUND","ABOUNDED","ABOUNDING","ABOUNDS","ABOUT","ABOVE","ABOVEBOARD","ABOVEGROUND","ABOVES","ABRACADABRA","ABRACADABRAS","ABRACHIA","ABRACHIAS","ABRADABLE","ABRADANT","ABRADANTS","ABRADE","ABRADED","ABRADER","ABRADERS","ABRADES","ABRADING","ABRASION","ABRASIONS","ABRASIVE","ABRASIVELY","ABRASIVENESS","ABRASIVENESSES","ABRASIVES","ABREACT","ABREACTED","ABREACTING","ABREACTION","ABREACTIONS","ABREACTS","ABREAST","ABRI","ABRIDGE","ABRIDGED","ABRIDGEMENT","ABRIDGEMENTS","ABRIDGER","ABRIDGERS","ABRIDGES","ABRIDGING","ABRIDGMENT","ABRIDGMENTS","ABRIS","ABROACH","ABROAD","ABROGABLE","ABROGATE","ABROGATED","ABROGATES","ABROGATING","ABROGATION","ABROGATIONS","ABROGATOR","ABROGATORS","ABROSIA","ABROSIAS","ABRUPT","ABRUPTER","ABRUPTEST","ABRUPTION","ABRUPTIONS","ABRUPTLY","ABRUPTNESS","ABRUPTNESSES","ABS","ABSCESS","ABSCESSED","ABSCESSES","ABSCESSING","ABSCISE","ABSCISED","ABSCISES","ABSCISIN","ABSCISING","ABSCISINS","ABSCISSA","ABSCISSAE","ABSCISSAS","ABSCISSION","ABSCISSIONS","ABSCOND","ABSCONDED","ABSCONDER","ABSCONDERS","ABSCONDING","ABSCONDS","ABSEIL","ABSEILED","ABSEILING","ABSEILS","ABSENCE","ABSENCES","ABSENT","ABSENTED","ABSENTEE","ABSENTEEISM","ABSENTEEISMS","ABSENTEES","ABSENTER","ABSENTERS","ABSENTING","ABSENTLY","ABSENTMINDED","ABSENTMINDEDLY","ABSENTS","ABSINTH","ABSINTHE","ABSINTHES","ABSINTHS","ABSOLUTE","ABSOLUTELY","ABSOLUTENESS","ABSOLUTENESSES","ABSOLUTER","ABSOLUTES","ABSOLUTEST","ABSOLUTION","ABSOLUTIONS","ABSOLUTISM","ABSOLUTISMS","ABSOLUTIST","ABSOLUTISTIC","ABSOLUTISTS","ABSOLUTIVE","ABSOLUTIZE","ABSOLUTIZED","ABSOLUTIZES","ABSOLUTIZING","ABSOLVE","ABSOLVED","ABSOLVENT","ABSOLVENTS","ABSOLVER","ABSOLVERS","ABSOLVES","ABSOLVING","ABSONANT","ABSORB","ABSORBABILITIES","ABSORBABILITY","ABSORBABLE","ABSORBANCE","ABSORBANCES","ABSORBANCIES","ABSORBANCY","ABSORBANT","ABSORBANTS","ABSORBED","ABSORBENCIES","ABSORBENCY","ABSORBENT","ABSORBENTS","ABSORBER","ABSORBERS","ABSORBING","ABSORBINGLY","ABSORBS","ABSORPTANCE","ABSORPTANCES","ABSORPTION","ABSORPTIONS","ABSORPTIVE","ABSORPTIVITIES","ABSORPTIVITY","ABSTAIN","ABSTAINED","ABSTAINER","ABSTAINERS","ABSTAINING","ABSTAINS","ABSTEMIOUS","ABSTEMIOUSLY","ABSTEMIOUSNESS","ABSTENTION","ABSTENTIONS","ABSTENTIOUS","ABSTERGE","ABSTERGED","ABSTERGES","ABSTERGING","ABSTINENCE","ABSTINENCES","ABSTINENT","ABSTINENTLY","ABSTRACT","ABSTRACTABLE","ABSTRACTED","ABSTRACTEDLY","ABSTRACTEDNESS","ABSTRACTER","ABSTRACTERS","ABSTRACTEST","ABSTRACTING","ABSTRACTION","ABSTRACTIONAL","ABSTRACTIONISM","ABSTRACTIONISMS","ABSTRACTIONIST","ABSTRACTIONISTS","ABSTRACTIONS","ABSTRACTIVE","ABSTRACTLY","ABSTRACTNESS","ABSTRACTNESSES","ABSTRACTOR","ABSTRACTORS","ABSTRACTS","ABSTRICT","ABSTRICTED","ABSTRICTING","ABSTRICTS","ABSTRUSE","ABSTRUSELY","ABSTRUSENESS","ABSTRUSENESSES","ABSTRUSER","ABSTRUSEST","ABSTRUSITIES","ABSTRUSITY","ABSURD","ABSURDER","ABSURDEST","ABSURDISM","ABSURDISMS","ABSURDIST","ABSURDISTS","ABSURDITIES","ABSURDITY","ABSURDLY","ABSURDNESS","ABSURDNESSES","ABSURDS","ABUBBLE","ABUILDING","ABULIA","ABULIAS","ABULIC","ABUNDANCE","ABUNDANCES","ABUNDANT","ABUNDANTLY","ABUSABLE","ABUSE","ABUSED","ABUSER","ABUSERS","ABUSES","ABUSING","ABUSIVE","ABUSIVELY","ABUSIVENESS","ABUSIVENESSES","ABUT","ABUTILON","ABUTILONS","ABUTMENT","ABUTMENTS","ABUTS","ABUTTAL","ABUTTALS","ABUTTED","ABUTTER","ABUTTERS","ABUTTING","ABUZZ","ABVOLT","ABVOLTS","ABWATT","ABWATTS","ABY","ABYE","ABYES","ABYING","ABYS","ABYSM","ABYSMAL","ABYSMALLY","ABYSMS","ABYSS","ABYSSAL","ABYSSES","ACACIA","ACACIAS","ACADEME","ACADEMES","ACADEMIA","ACADEMIAS","ACADEMIC","ACADEMICAL","ACADEMICALLY","ACADEMICIAN","ACADEMICIANS","ACADEMICISM","ACADEMICISMS","ACADEMICS","ACADEMIES","ACADEMISM","ACADEMISMS","ACADEMY","ACAJOU","ACAJOUS","ACALEPH","ACALEPHAE","ACALEPHE","ACALEPHES","ACALEPHS","ACANTHA","ACANTHAE","ACANTHI","ACANTHINE","ACANTHOCEPHALAN","ACANTHOID","ACANTHOUS","ACANTHUS","ACANTHUSES","ACAPNIA","ACAPNIAS","ACARBOSE","ACARBOSES","ACARI","ACARIASES","ACARIASIS","ACARICIDAL","ACARICIDE","ACARICIDES","ACARID","ACARIDAN","ACARIDANS","ACARIDS","ACARINE","ACARINES","ACAROID","ACAROLOGIES","ACAROLOGY","ACARPOUS","ACARUS","ACATALECTIC","ACATALECTICS","ACAUDAL","ACAUDATE","ACAULESCENT","ACAULINE","ACAULOSE","ACAULOUS","ACCEDE","ACCEDED","ACCEDENCE","ACCEDENCES","ACCEDER","ACCEDERS","ACCEDES","ACCEDING","ACCELERANDO","ACCELERANDOS","ACCELERANT","ACCELERANTS","ACCELERATE","ACCELERATED","ACCELERATES","ACCELERATING","ACCELERATINGLY","ACCELERATION","ACCELERATIONS","ACCELERATIVE","ACCELERATOR","ACCELERATORS","ACCELEROMETER","ACCELEROMETERS","ACCENT","ACCENTED","ACCENTING","ACCENTLESS","ACCENTOR","ACCENTORS","ACCENTS","ACCENTUAL","ACCENTUALLY","ACCENTUATE","ACCENTUATED","ACCENTUATES","ACCENTUATING","ACCENTUATION","ACCENTUATIONS","ACCEPT","ACCEPTABILITIES","ACCEPTABILITY","ACCEPTABLE","ACCEPTABLENESS","ACCEPTABLY","ACCEPTANCE","ACCEPTANCES","ACCEPTANT","ACCEPTATION","ACCEPTATIONS","ACCEPTED","ACCEPTEDLY","ACCEPTEE","ACCEPTEES","ACCEPTER","ACCEPTERS","ACCEPTING","ACCEPTINGLY","ACCEPTINGNESS","ACCEPTINGNESSES","ACCEPTIVE","ACCEPTOR","ACCEPTORS","ACCEPTS","ACCESS","ACCESSARIES","ACCESSARY","ACCESSED","ACCESSES","ACCESSIBILITIES","ACCESSIBILITY","ACCESSIBLE","ACCESSIBLENESS","ACCESSIBLY","ACCESSING","ACCESSION","ACCESSIONAL","ACCESSIONED","ACCESSIONING","ACCESSIONS","ACCESSORIAL","ACCESSORIES","ACCESSORISE","ACCESSORISED","ACCESSORISES","ACCESSORISING","ACCESSORIZE","ACCESSORIZED","ACCESSORIZES","ACCESSORIZING","ACCESSORY","ACCIACCATURA","ACCIACCATURAS","ACCIDENCE","ACCIDENCES","ACCIDENT","ACCIDENTAL","ACCIDENTALLY","ACCIDENTALNESS","ACCIDENTALS","ACCIDENTLY","ACCIDENTS","ACCIDIA","ACCIDIAS","ACCIDIE","ACCIDIES","ACCIPITER","ACCIPITERS","ACCIPITRINE","ACCIPITRINES","ACCLAIM","ACCLAIMED","ACCLAIMER","ACCLAIMERS","ACCLAIMING","ACCLAIMS","ACCLAMATION","ACCLAMATIONS","ACCLIMATE","ACCLIMATED","ACCLIMATES","ACCLIMATING","ACCLIMATION","ACCLIMATIONS","ACCLIMATISE","ACCLIMATISED","ACCLIMATISES",
@@ -233,100 +237,126 @@ const DICTIONARY = [
     "WRONG","WRONGDOER","WRONGDOERS","WRONGDOING","WRONGDOINGS","WRONGED","WRONGER","WRONGERS","WRONGEST","WRONGFUL","WRONGFULLY","WRONGFULNESS","WRONGFULNESSES","WRONGHEADED","WRONGHEADEDLY","WRONGHEADEDNESS","WRONGING","WRONGLY","WRONGNESS","WRONGNESSES","WRONGS","WROTE","WROTH","WROTHFUL","WROUGHT","WRUNG","WRY","WRYER","WRYEST","WRYING","WRYLY","WRYNECK","WRYNECKS","WRYNESS","WRYNESSES","WUD","WULFENITE","WULFENITES","WUNDERKIND","WUNDERKINDER","WURST","WURSTS","WURTZITE","WURTZITES","WURZEL","WURZELS","WUSHU","WUSS","WUSSES","WUSSIER","WUSSIES","WUSSIEST","WUSSY","WUTHER","WUTHERED","WUTHERING","WUTHERS","WYANDOTTE","WYANDOTTES","WYCH","WYCHES","WYE","WYES","WYLE","WYLED","WYLES","WYLIECOAT","WYLIECOATS","WYLING","WYN","WYND","WYNDS","WYNN","WYNNS","WYNS","WYTE","WYTED","WYTES","WYTING","WYVERN","WYVERNS","XANTHAN","XANTHANS","XANTHATE","XANTHATES","XANTHEIN","XANTHEINS","XANTHENE","XANTHENES","XANTHIC","XANTHIN","XANTHINE","XANTHINES","XANTHINS","XANTHOMA","XANTHOMAS","XANTHOMATA","XANTHONE","XANTHONES","XANTHOPHYLL","XANTHOPHYLLS","XANTHOUS","XEBEC","XEBECS","XENIA","XENIAL","XENIAS","XENIC","XENOBIOTIC","XENOBIOTICS","XENOBLAST","XENOBLASTS","XENOCRYST","XENOCRYSTS","XENODIAGNOSES","XENODIAGNOSIS","XENODIAGNOSTIC","XENOGAMIES","XENOGAMY","XENOGENEIC","XENOGENIC","XENOGENIES","XENOGENY","XENOGRAFT","XENOGRAFTS","XENOLITH","XENOLITHIC","XENOLITHS","XENON","XENONS","XENOPHILE","XENOPHILES","XENOPHOBE","XENOPHOBES","XENOPHOBIA","XENOPHOBIAS","XENOPHOBIC","XENOPHOBICALLY","XENOPUS","XENOPUSES","XENOTROPIC","XERARCH","XERIC","XERICALLY","XERISCAPE","XERISCAPES","XERODERMA","XERODERMAE","XERODERMAS","XEROGRAPHIC","XEROGRAPHICALLY","XEROGRAPHIES","XEROGRAPHY","XEROPHILE","XEROPHILIES","XEROPHILOUS","XEROPHILY","XEROPHTHALMIA","XEROPHTHALMIAS","XEROPHTHALMIC","XEROPHYTE","XEROPHYTES","XEROPHYTIC","XEROPHYTISM","XEROPHYTISMS","XERORADIOGRAPHY","XEROSERE","XEROSERES","XEROSES","XEROSIS","XEROTHERMIC","XEROTIC","XEROX","XEROXED","XEROXES","XEROXING","XERUS","XERUSES","XI","XIPHISTERNA","XIPHISTERNUM","XIPHOID","XIPHOIDS","XIS","XU","XYLAN","XYLANS","XYLEM","XYLEMS","XYLENE","XYLENES","XYLIDIN","XYLIDINE","XYLIDINES","XYLIDINS","XYLITOL","XYLITOLS","XYLOCARP","XYLOCARPS","XYLOGRAPH","XYLOGRAPHED","XYLOGRAPHER","XYLOGRAPHERS","XYLOGRAPHIC","XYLOGRAPHICAL","XYLOGRAPHIES","XYLOGRAPHING","XYLOGRAPHS","XYLOGRAPHY","XYLOID","XYLOL","XYLOLS","XYLOPHAGE","XYLOPHAGES","XYLOPHAGOUS","XYLOPHONE","XYLOPHONES","XYLOPHONIST","XYLOPHONISTS","XYLOSE","XYLOSES","XYLOTOMIES","XYLOTOMY","XYLYL","XYLYLS","XYST","XYSTER","XYSTERS","XYSTI","XYSTOI","XYSTOS","XYSTS","XYSTUS","YA","YABBER","YABBERED","YABBERING","YABBERS","YABBIE","YABBIES","YABBY","YACHT","YACHTED","YACHTER","YACHTERS","YACHTING","YACHTINGS","YACHTMAN","YACHTMEN","YACHTS","YACHTSMAN","YACHTSMEN","YACK","YACKED","YACKING","YACKS","YAFF","YAFFED","YAFFING","YAFFS","YAG","YAGER","YAGERS","YAGI","YAGIS","YAGS","YAH","YAHOO","YAHOOISM","YAHOOISMS","YAHOOS","YAHRZEIT","YAHRZEITS","YAIRD","YAIRDS","YAK","YAKITORI","YAKITORIS","YAKKED","YAKKER","YAKKERS","YAKKING","YAKS","YAKUZA","YALD","YAM","YAMALKA","YAMALKAS","YAMEN","YAMENS","YAMMER","YAMMERED","YAMMERER","YAMMERERS","YAMMERING","YAMMERS","YAMS","YAMULKA","YAMULKAS","YAMUN","YAMUNS","YANG","YANGS","YANK","YANKED","YANKING","YANKS","YANQUI","YANQUIS","YANTRA","YANTRAS","YAP","YAPOCK","YAPOCKS","YAPOK","YAPOKS","YAPON","YAPONS","YAPPED","YAPPER","YAPPERS","YAPPING","YAPPINGLY","YAPS","YAR","YARD","YARDAGE","YARDAGES","YARDARM","YARDARMS","YARDBIRD","YARDBIRDS","YARDED","YARDER","YARDERS","YARDING","YARDLAND","YARDLANDS","YARDMAN","YARDMASTER","YARDMASTERS","YARDMEN","YARDS","YARDSTICK","YARDSTICKS","YARDWAND","YARDWANDS","YARDWORK","YARDWORKS","YARE","YARELY","YARER","YAREST","YARMELKE","YARMELKES","YARMULKE","YARMULKES","YARN","YARNED","YARNER","YARNERS","YARNING","YARNS","YARROW","YARROWS","YASHMAC","YASHMACS","YASHMAK","YASHMAKS","YASMAK","YASMAKS","YATAGAN","YATAGANS","YATAGHAN","YATAGHANS","YATTER","YATTERED","YATTERING","YATTERS","YAUD","YAUDS","YAULD","YAUP","YAUPED","YAUPER","YAUPERS","YAUPING","YAUPON","YAUPONS","YAUPS","YAUTIA","YAUTIAS","YAW","YAWED","YAWEY","YAWING","YAWL","YAWLED","YAWLING","YAWLS","YAWMETER","YAWMETERS","YAWN","YAWNED","YAWNER","YAWNERS","YAWNING","YAWNINGLY","YAWNS","YAWP","YAWPED","YAWPER","YAWPERS","YAWPING","YAWPINGS","YAWPS","YAWS","YAY","YAYS","YCLAD","YCLEPED","YCLEPT","YE","YEA","YEAH","YEAHS","YEALING","YEALINGS","YEAN","YEANED","YEANING","YEANLING","YEANLINGS","YEANS","YEAR","YEARBOOK","YEARBOOKS","YEAREND","YEARENDS","YEARLIES","YEARLING","YEARLINGS","YEARLONG","YEARLY","YEARN","YEARNED","YEARNER","YEARNERS","YEARNING","YEARNINGLY","YEARNINGS","YEARNS","YEARS","YEAS","YEASAYER","YEASAYERS","YEAST","YEASTED","YEASTIER","YEASTIEST","YEASTILY","YEASTINESS","YEASTINESSES","YEASTING","YEASTLESS","YEASTLIKE","YEASTS","YEASTY","YECCH","YECCHS","YECH","YECHS","YECHY","YEELIN","YEELINS","YEGG","YEGGMAN","YEGGMEN","YEGGS","YEH","YELD","YELK","YELKS","YELL","YELLED","YELLER","YELLERS","YELLING","YELLOW","YELLOWED","YELLOWER","YELLOWEST","YELLOWFIN","YELLOWFINS","YELLOWHAMMER","YELLOWHAMMERS","YELLOWING","YELLOWISH","YELLOWLEGS","YELLOWLY","YELLOWS","YELLOWTAIL","YELLOWTAILS","YELLOWTHROAT","YELLOWTHROATS","YELLOWWARE","YELLOWWARES","YELLOWWOOD","YELLOWWOODS","YELLOWY","YELLS","YELP","YELPED","YELPER","YELPERS","YELPING","YELPS","YEN","YENNED","YENNING","YENS","YENTA","YENTAS","YENTE","YENTES","YEOMAN","YEOMANLY","YEOMANRIES","YEOMANRY","YEOMEN","YEP","YEPS","YERBA","YERBAS","YERK","YERKED","YERKING","YERKS","YES","YESES","YESHIVA","YESHIVAH","YESHIVAHS","YESHIVAS","YESHIVOT","YESHIVOTH","YESSED","YESSES","YESSING","YESTER","YESTERDAY","YESTERDAYS","YESTEREVE","YESTEREVES","YESTERN","YESTERNIGHT","YESTERNIGHTS","YESTERYEAR","YESTERYEARS","YESTREEN","YESTREENS","YET","YETI","YETIS","YETT","YETTS","YEUK","YEUKED","YEUKING","YEUKS","YEUKY","YEW","YEWS","YID","YIDS","YIELD","YIELDABLE","YIELDED","YIELDER","YIELDERS","YIELDING","YIELDS","YIKES","YILL","YILLS","YIN","YINCE","YINS","YIP","YIPE","YIPES","YIPPED","YIPPEE","YIPPIE","YIPPIES","YIPPING","YIPS","YIRD","YIRDS","YIRR","YIRRED","YIRRING","YIRRS","YIRTH","YIRTHS","YLEM","YLEMS","YO","YOB","YOBBO","YOBBOES","YOBBOS","YOBS","YOCK","YOCKED","YOCKING","YOCKS","YOCTOSECOND","YOCTOSECONDS","YOD","YODEL","YODELED","YODELER","YODELERS","YODELING","YODELLED","YODELLER","YODELLERS","YODELLING","YODELS","YODH","YODHS","YODLE","YODLED","YODLER","YODLERS","YODLES","YODLING","YODS","YOGA","YOGAS","YOGEE","YOGEES","YOGH","YOGHOURT","YOGHOURTS","YOGHS","YOGHURT","YOGHURTS","YOGI","YOGIC","YOGIN","YOGINI","YOGINIS","YOGINS","YOGIS","YOGURT","YOGURTS","YOHIMBE","YOHIMBES","YOHIMBINE","YOHIMBINES","YOICKS","YOK","YOKE","YOKED","YOKEFELLOW","YOKEFELLOWS","YOKEL","YOKELESS","YOKELISH","YOKELS","YOKEMATE","YOKEMATES","YOKES","YOKING","YOKOZUNA","YOKOZUNAS","YOKS","YOLK","YOLKED","YOLKIER","YOLKIEST","YOLKS","YOLKY","YOM","YOMIM","YON","YOND","YONDER","YONI","YONIC","YONIS","YONKER","YONKERS","YORE","YORES","YOTTABYTE","YOTTABYTES","YOU","YOUNG","YOUNGBERRIES","YOUNGBERRY","YOUNGER","YOUNGERS","YOUNGEST","YOUNGISH","YOUNGLING","YOUNGLINGS","YOUNGNESS","YOUNGNESSES","YOUNGS","YOUNGSTER","YOUNGSTERS","YOUNKER","YOUNKERS","YOUPON","YOUPONS","YOUR","YOURN","YOURS","YOURSELF","YOURSELVES","YOUS","YOUSE","YOUTH","YOUTHEN","YOUTHENED","YOUTHENING","YOUTHENS","YOUTHFUL","YOUTHFULLY","YOUTHFULNESS","YOUTHFULNESSES","YOUTHQUAKE","YOUTHQUAKES","YOUTHS","YOW","YOWE","YOWED","YOWES","YOWIE","YOWIES","YOWING","YOWL","YOWLED","YOWLER","YOWLERS","YOWLING","YOWLS","YOWS","YPERITE","YPERITES","YTTERBIA","YTTERBIAS","YTTERBIC","YTTERBIUM","YTTERBIUMS","YTTERBOUS","YTTRIA","YTTRIAS","YTTRIC","YTTRIUM","YTTRIUMS","YUAN","YUANS","YUCA","YUCAS","YUCCA","YUCCAS","YUCCH","YUCH","YUCK","YUCKED","YUCKIER","YUCKIEST","YUCKINESS","YUCKINESSES","YUCKING","YUCKS","YUCKY","YUGA","YUGAS","YUK","YUKKED","YUKKIER","YUKKIEST","YUKKING","YUKKY","YUKS","YULAN","YULANS","YULE","YULES","YULETIDE","YULETIDES","YUM","YUMMIER","YUMMIES","YUMMIEST","YUMMINESS","YUMMINESSES","YUMMY","YUP","YUPON","YUPONS","YUPPIE","YUPPIEDOM","YUPPIEDOMS","YUPPIEISH","YUPPIES","YUPPIFIED","YUPPIFIES","YUPPIFY","YUPPIFYING","YUPPY","YUPS","YURT","YURTA","YURTS","YUTZ","YUTZES","YWIS","ZA","ZABAGLIONE","ZABAGLIONES","ZABAIONE","ZABAIONES","ZABAJONE","ZABAJONES","ZACATON","ZACATONS","ZADDICK","ZADDIK","ZADDIKIM","ZAFFAR","ZAFFARS","ZAFFER","ZAFFERS","ZAFFIR","ZAFFIRS","ZAFFRE","ZAFFRES","ZAFTIG","ZAG","ZAGGED","ZAGGING","ZAGS","ZAIBATSU","ZAIKAI","ZAIKAIS","ZAIRE","ZAIRES","ZAMARRA","ZAMARRAS","ZAMARRO","ZAMARROS","ZAMIA","ZAMIAS","ZAMINDAR","ZAMINDARI","ZAMINDARIS","ZAMINDARS","ZANANA","ZANANAS","ZANDER","ZANDERS","ZANIER","ZANIES","ZANIEST","ZANILY","ZANINESS","ZANINESSES","ZANY","ZANYISH","ZANZA","ZANZAS","ZAP","ZAPATEADO","ZAPATEADOS","ZAPATEO","ZAPATEOS","ZAPPED","ZAPPER","ZAPPERS","ZAPPIER","ZAPPIEST","ZAPPING","ZAPPY","ZAPS","ZAPTIAH","ZAPTIAHS","ZAPTIEH","ZAPTIEHS","ZARATITE","ZARATITES","ZAREBA","ZAREBAS","ZAREEBA","ZAREEBAS","ZARF","ZARFS","ZARIBA","ZARIBAS","ZARZUELA","ZARZUELAS","ZAS","ZASTRUGA","ZASTRUGI","ZAX","ZAXES","ZAYIN","ZAYINS","ZAZEN","ZAZENS","ZEAL","ZEALOT","ZEALOTRIES","ZEALOTRY","ZEALOTS","ZEALOUS","ZEALOUSLY","ZEALOUSNESS","ZEALOUSNESSES","ZEALS","ZEATIN","ZEATINS","ZEBEC","ZEBECK","ZEBECKS","ZEBECS","ZEBRA","ZEBRAFISH","ZEBRAFISHES","ZEBRAIC","ZEBRANO","ZEBRANOS","ZEBRAS","ZEBRASS","ZEBRASSES","ZEBRAWOOD","ZEBRAWOODS","ZEBRINE","ZEBRINES","ZEBROID","ZEBU","ZEBUS","ZECCHIN","ZECCHINI","ZECCHINO","ZECCHINOS","ZECCHINS","ZECHIN","ZECHINS","ZED","ZEDOARIES","ZEDOARY","ZEDS","ZEE","ZEES","ZEIN","ZEINS","ZEITGEBER","ZEITGEBERS","ZEITGEIST","ZEITGEISTS","ZEK","ZEKS","ZELKOVA","ZELKOVAS","ZEMINDAR","ZEMINDARIES","ZEMINDARS","ZEMINDARY","ZEMSTVA","ZEMSTVO","ZEMSTVOS","ZENAIDA","ZENAIDAS","ZENANA","ZENANAS","ZENITH","ZENITHAL","ZENITHS","ZEOLITE","ZEOLITES","ZEOLITIC","ZEP","ZEPHYR","ZEPHYRS","ZEPPELIN","ZEPPELINS","ZEPPOLE","ZEPPOLES","ZEPPOLI","ZEPS","ZEPTOSECOND","ZEPTOSECONDS","ZERK","ZERKS",
     "ZERO","ZEROED","ZEROES","ZEROING","ZEROS","ZEROTH","ZEST","ZESTED","ZESTER","ZESTERS","ZESTFUL","ZESTFULLY","ZESTFULNESS","ZESTFULNESSES","ZESTIER","ZESTIEST","ZESTILY","ZESTING","ZESTLESS","ZESTS","ZESTY","ZETA","ZETAS","ZETTABYTE","ZETTABYTES","ZEUGMA","ZEUGMAS","ZEUGMATIC","ZIBELINE","ZIBELINES","ZIBELLINE","ZIBELLINES","ZIBET","ZIBETH","ZIBETHS","ZIBETS","ZIDOVUDINE","ZIDOVUDINES","ZIG","ZIGGED","ZIGGING","ZIGGURAT","ZIGGURATS","ZIGS","ZIGZAG","ZIGZAGGED","ZIGZAGGER","ZIGZAGGERS","ZIGZAGGING","ZIGZAGGY","ZIGZAGS","ZIKKURAT","ZIKKURATS","ZIKURAT","ZIKURATS","ZILCH","ZILCHES","ZILL","ZILLAH","ZILLAHS","ZILLION","ZILLIONAIRE","ZILLIONAIRES","ZILLIONS","ZILLIONTH","ZILLS","ZIN","ZINC","ZINCATE","ZINCATES","ZINCED","ZINCIC","ZINCIFIED","ZINCIFIES","ZINCIFY","ZINCIFYING","ZINCING","ZINCITE","ZINCITES","ZINCKED","ZINCKING","ZINCKY","ZINCOID","ZINCOUS","ZINCS","ZINCY","ZINE","ZINEB","ZINEBS","ZINES","ZINFANDEL","ZINFANDELS","ZING","ZINGANI","ZINGANO","ZINGARA","ZINGARE","ZINGARI","ZINGARO","ZINGED","ZINGER","ZINGERS","ZINGIER","ZINGIEST","ZINGING","ZINGS","ZINGY","ZINKENITE","ZINKENITES","ZINKIFIED","ZINKIFIES","ZINKIFY","ZINKIFYING","ZINKY","ZINNIA","ZINNIAS","ZINS","ZIP","ZIPLESS","ZIPLOCK","ZIPPED","ZIPPER","ZIPPERED","ZIPPERING","ZIPPERS","ZIPPIER","ZIPPIEST","ZIPPING","ZIPPY","ZIPS","ZIRAM","ZIRAMS","ZIRCALOY","ZIRCALOYS","ZIRCON","ZIRCONIA","ZIRCONIAS","ZIRCONIC","ZIRCONIUM","ZIRCONIUMS","ZIRCONS","ZIT","ZITHER","ZITHERIST","ZITHERISTS","ZITHERN","ZITHERNS","ZITHERS","ZITI","ZITIS","ZITS","ZIZIT","ZIZITH","ZIZZLE","ZIZZLED","ZIZZLES","ZIZZLING","ZLOTE","ZLOTIES","ZLOTY","ZLOTYCH","ZLOTYS","ZOA","ZOANTHARIAN","ZOANTHARIANS","ZOARIA","ZOARIAL","ZOARIUM","ZOCALO","ZOCALOS","ZODIAC","ZODIACAL","ZODIACS","ZOEA","ZOEAE","ZOEAL","ZOEAS","ZOECIA","ZOECIUM","ZOFTIG","ZOIC","ZOISITE","ZOISITES","ZOMBI","ZOMBIE","ZOMBIELIKE","ZOMBIES","ZOMBIFICATION","ZOMBIFICATIONS","ZOMBIFIED","ZOMBIFIES","ZOMBIFY","ZOMBIFYING","ZOMBIISM","ZOMBIISMS","ZOMBIS","ZONA","ZONAE","ZONAL","ZONALLY","ZONARY","ZONATE","ZONATED","ZONATION","ZONATIONS","ZONE","ZONED","ZONELESS","ZONER","ZONERS","ZONES","ZONETIME","ZONETIMES","ZONING","ZONK","ZONKED","ZONKING","ZONKS","ZONULA","ZONULAE","ZONULAR","ZONULAS","ZONULE","ZONULES","ZOO","ZOOCHORE","ZOOCHORES","ZOOECIA","ZOOECIUM","ZOOEY","ZOOGAMETE","ZOOGAMETES","ZOOGENIC","ZOOGENIES","ZOOGENOUS","ZOOGENY","ZOOGEOGRAPHER","ZOOGEOGRAPHERS","ZOOGEOGRAPHIC","ZOOGEOGRAPHICAL","ZOOGEOGRAPHIES","ZOOGEOGRAPHY","ZOOGLEA","ZOOGLEAE","ZOOGLEAL","ZOOGLEAS","ZOOGLOEA","ZOOGLOEAE","ZOOGLOEAL","ZOOGLOEAS","ZOOGLOEIC","ZOOGRAPHIES","ZOOGRAPHY","ZOOID","ZOOIDAL","ZOOIDS","ZOOIER","ZOOIEST","ZOOKEEPER","ZOOKEEPERS","ZOOKS","ZOOLATER","ZOOLATERS","ZOOLATRIES","ZOOLATRY","ZOOLOGIC","ZOOLOGICAL","ZOOLOGICALLY","ZOOLOGIES","ZOOLOGIST","ZOOLOGISTS","ZOOLOGY","ZOOM","ZOOMANIA","ZOOMANIAS","ZOOMED","ZOOMETRIC","ZOOMETRIES","ZOOMETRY","ZOOMING","ZOOMORPH","ZOOMORPHIC","ZOOMORPHS","ZOOMS","ZOON","ZOONAL","ZOONED","ZOONING","ZOONOSES","ZOONOSIS","ZOONOTIC","ZOONS","ZOOPHILE","ZOOPHILES","ZOOPHILIA","ZOOPHILIAS","ZOOPHILIC","ZOOPHILIES","ZOOPHILOUS","ZOOPHILY","ZOOPHOBE","ZOOPHOBES","ZOOPHOBIA","ZOOPHOBIAS","ZOOPHYTE","ZOOPHYTES","ZOOPHYTIC","ZOOPLANKTER","ZOOPLANKTERS","ZOOPLANKTON","ZOOPLANKTONIC","ZOOPLANKTONS","ZOOS","ZOOSPERM","ZOOSPERMS","ZOOSPORANGIA","ZOOSPORANGIUM","ZOOSPORE","ZOOSPORES","ZOOSPORIC","ZOOSTEROL","ZOOSTEROLS","ZOOTECHNICAL","ZOOTECHNICS","ZOOTIER","ZOOTIEST","ZOOTOMIC","ZOOTOMIES","ZOOTOMIST","ZOOTOMISTS","ZOOTOMY","ZOOTY","ZOOXANTHELLA","ZOOXANTHELLAE","ZORI","ZORIL","ZORILLA","ZORILLAS","ZORILLE","ZORILLES","ZORILLO","ZORILLOS","ZORILS","ZORIS","ZOSTER","ZOSTERS","ZOUAVE","ZOUAVES","ZOUK","ZOUKS","ZOUNDS","ZOWIE","ZOYSIA","ZOYSIAS","ZUCCHETTI","ZUCCHETTO","ZUCCHETTOS","ZUCCHINI","ZUCCHINIS","ZUGZWANG","ZUGZWANGS","ZUZ","ZUZIM","ZWIEBACK","ZWIEBACKS","ZWITTERION","ZWITTERIONIC","ZWITTERIONS","ZYDECO","ZYDECOS","ZYGAPOPHYSES","ZYGAPOPHYSIS","ZYGODACTYL","ZYGODACTYLOUS","ZYGOID","ZYGOMA","ZYGOMAS","ZYGOMATA","ZYGOMATIC","ZYGOMATICS","ZYGOMORPHIC","ZYGOMORPHIES","ZYGOMORPHY","ZYGOSE","ZYGOSES","ZYGOSIS","ZYGOSITIES","ZYGOSITY","ZYGOSPORE","ZYGOSPORES","ZYGOTE","ZYGOTENE","ZYGOTENES","ZYGOTES","ZYGOTIC","ZYMASE","ZYMASES","ZYME","ZYMES","ZYMOGEN","ZYMOGENE","ZYMOGENES","ZYMOGENIC","ZYMOGENS","ZYMOGRAM","ZYMOGRAMS","ZYMOLOGIC","ZYMOLOGIES","ZYMOLOGY","ZYMOLYSES","ZYMOLYSIS","ZYMOLYTIC","ZYMOMETER","ZYMOMETERS","ZYMOSAN","ZYMOSANS","ZYMOSES","ZYMOSIS","ZYMOTIC","ZYMURGIES","ZYMURGY","ZYZZYVA","ZYZZYVAS","ZZZ" 
 ];
-  
-// This is the main method call.
-Initialize()
 
-// This method builds the page, including the button, title, and description
+// This function is called on keyboard presses.
+function submitForm(e) {
+    // if enter presses, run pressButton()
+    if(e.keyCode === 13) {pressButton();} 
+} 
+
+// This function builds the page, including the button, title, and description
 function Initialize(){ // ON PAGE START
-    
-    title.innerHTML += `<div id="title">`+"Wordle Solver"
+    // Write display text to HTML
+    title.innerHTML = `<div id="title">`+"Wordle Solver"
         +`</div>`; // title
-
-    description.innerHTML +=`<div id="description">`+"Get a list of words that fit your Wordle criteria."
+    description.innerHTML =`<div id="description">`+"Get a list of words that fit your Wordle criteria."
         +`</div>`; // description
     instruction.innerHTML = `<div id="description">`+"Enter your first word."
         +`</div>`; // instruction
 
-    inputs.innerHTML +=`<input type="text" id="inputTEXT"/>`; //text input
-    inputs.innerHTML +=`<button id="button" onclick="Calculate()" >Run</button>`; // run button
-
-    var form = document.getElementById('form'); // importing the form to collect key inputs.
-    function submitForm(e) {//if enter pressed
-        if(e.keyCode === 13) {Calculate();} // if enter presses, run calculate()
-    } document.addEventListener('keypress', function() {submitForm(event)}, false); //listens for key presses when window active.
+    // Add textbox and button to HTML
+    inputs.innerHTML +=`<input type="text" id="inputTEXT"/>`;                       // Add textbox 
+    inputs.innerHTML +=`<button id="button" onclick="pressButton()" >Run</button>`;   // Add button
 }
 
 //This function is called on each button press or ENTER press => filters array on every even# execution
-function Calculate(){ //EVERY BUTTON PRESS
-    let resultWord="";
+function pressButton(){ //EVERY BUTTON PRESS
+    // increment counter to record # of guesses
+    buttonPressNum++;  
+    // initiate variable with textbox data
     inputString =document.getElementById("inputTEXT").value;
-    if((buttonPressNum%2==0)){                                                              // EVEN PRESSES
-        if((buttonPressNum==0)){                                                    // first press
-            wordLength=inputString.length;//collect length
+    // Clear the textbox
+    document.getElementById('inputTEXT').value="";     
+
+    // Guard clause
+    if(inputString==""){
+        // output the error
+        output.innerHTML=`<div id="output">`+"Enter characters into the text box."
+        +`</div>`; // output
+        return
+    }
+    // ODD PRESSES
+    if((buttonPressNum%2==1)){     
+
+        // first press
+        if((buttonPressNum==1)){   
+            //collect word length                                                 
+            wordLength=inputString.length;
             DICTIONARY.forEach(wrd => { // fills array with length fitting words.
             if(wrd.length==wordLength){
                 wordArray.push(wrd);    // once words are added, the rest of the program will remove non-conforming words.
             }
-        });
-        instruction.innerHTML = `<div id="description">`+"Enter the #"+wordNum+" word."     
-        +`</div>`; // collect the word for each of the 9 guesses.
+            });
         }
-        guessWord=inputString.toUpperCase(); //assigns the guess from the textbox
+
+        // Stores the guess from the textbox
+        guessWord=inputString.toUpperCase(); 
+
+        // Display text for Odd button press input
         instruction.innerHTML = `<div id="description">`+"Enter the #"+wordNum+" word results replacing green, orange, and black with 123 respectively."
         +`</div>`; // instruction
+
+        // increment 
         wordNum++;
     }
-    if(buttonPressNum%2==1){                                                                // ODD PRESSES
-        resultWord=inputString; //string of numbers that coordinate to the guessWord
+    // EVEN PRESSES
+    if(buttonPressNum%2==0){       
 
-        filterArr(wordArray,guessWord,resultWord); // filters an array using a guess and result, printing the results
+        // Stores the numbers from the textbox
+        guessResult=inputString; 
+
+        // Removes bad words from returned array
+        filterArr(wordArray,guessWord,guessResult); 
+
+        // Display text for Even button press input
         instruction.innerHTML = `<div id="description">`+"Enter the #"+wordNum+" word."
         +`</div>`; // instruction
     }
-    if(wordNum>9){                                                                          // GAME OVER
+    // END OF GAME
+    if(wordNum>9){
+        // instruction GAME OVER text assignment
         instruction.innerHTML= `<div id="instruction">`+"Game Over. Page reloading"
-        +`</div>`; // instruction GAME OVER text assignment
+        +`</div>`; 
         setTimeout(function(){
             window.location.reload(); // reload the page after 3 seconds
         }, 3000);
     }
-    document.getElementById('inputTEXT').value="";     //clear the textbox
-    buttonPressNum++;  // increment counter to record # of guesses
 };
 
-// This method filters an array using a guess and result, printing the results
-function filterArr(array1,guessWord,guessResult){  // EVERY ODD PRESS from inside Calculate()
-    let words254=[]; // temporary array created to help delete words from wordArray
-    let neededChars =[]; // list of characters labeled GREEN
-    let wordLength = guessWord.length; 
+// This function filters an array using a guess and result, printing the results
+function filterArr(array1,guessWord,guessResult){  // EVERY ODD PRESS from inside pressButton()
+    // temporary array that stores potential words
+    let words254=[]; 
+    // list of characters definitely in the answer
+    neededChars =[]; 
     
 
-    //For each word
+    //For each word of the inputed array
     array1.forEach(word => {
-        let greenTest=true;
-        let orangeTest=true;
-        let blackTest=true;
-        // for each letter of potential word
+        // Initiate Tests
+        let greenTest=true; let orangeTest=true; let blackTest=true;
+
+        // for each letter of each word of the input array
         for (let col=0;col<wordLength;col++){
-            if(guessResult.charAt(col)=='1'){//if output letter of that guess was green
+
+            // if the letter in your guess at that corresponding spot was correct
+            if(guessResult.charAt(col)=='1'){
                 
-                if((word.charAt(col)==guessWord.charAt(col))){ // if potential word letter does match the corresponding guess letter
-                    //System.out.println(word+"good");
+                // if the letter of the word in the input array matches the correct character 
+                if((word.charAt(col)==guessWord.charAt(col))){
                     
+                    // if the correct character is not in the need characters array, add it.
                     if(!neededChars.includes(guessWord.charAt(col))){
+                        // Add correct character to needed characters array
                         neededChars.push(guessWord.charAt(col));
                     }
-                    
                 }
                 else {
-                    greenTest=false;/*System.out.println(word+"bad");*/
-                    
+                    greenTest=false;
                 }
-                
             }
-            
-            if(guessResult.charAt(col)=='2'){//if output letter of that guess was orange
+            // if the letter in your guess at that corresponding spot was orange
+            if(guessResult.charAt(col)=='2'){
                 if(!neededChars.includes(guessWord.charAt(col))){
                     neededChars.push(guessWord.charAt(col));
                 }
@@ -338,22 +368,32 @@ function filterArr(array1,guessWord,guessResult){  // EVERY ODD PRESS from insid
                     orangeTest=false;
                 }
             }
-            if(guessResult.charAt(col)=='3'){//if output letter of that guess was black
-                //does not account for only 1 of a ccertain character 
-                
-                if((word.includes(guessWord.charAt(col)))){ // if potential word contains black letter
+            // if the letter in your guess at that corresponding spot was black
+            if(guessResult.charAt(col)=='3'){
 
-                    if (neededChars.includes(guessWord.charAt(col))){ // if blacked letter is also orange/green, ignore.
+                // if potential word contains black letter
+                if((word.includes(guessWord.charAt(col)))){ 
+
+                    // if black letter is also orange/green, ---- This happens when more of a certain character are in the guess than the answer
+                    if (neededChars.includes(guessWord.charAt(col))){ 
+
+                        // Initialize counts of the certain letter for each word
                         let guessLetterCount =0;
                         let listLetterCount =0;
+
+                        // for loop with length of answer
                         for (let ltttr=0;ltttr<wordLength;ltttr++) {
+
+                            // count how many times that certain character appears in the guess
                             if((guessWord.charAt(ltttr)==word.charAt(ltttr))&&((guessResult=="1")||(guessResult=="2"))){
                                 guessLetterCount++;
                             }
-                            if((guessWord.charAt(ltttr)==word.charAt(ltttr))&&((guessResult=="1")||(guessResult=="2"))){
-                                guessLetterCount++;
+                            // count how many times that certain character appears in the potential word
+                            if((word.charAt(ltttr)==word.charAt(ltttr))&&((guessResult=="1")||(guessResult=="2"))){
+                                listLetterCount++;
                             }
                         }
+                        // if the count of certain character is the same in the guess and the potential word, let the word 
                         if(guessLetterCount==listLetterCount){;}else{blackTest=false;}
                     } else {blackTest=false;} // if blacked letter is not also orange/green, fail word.
                 }
@@ -367,18 +407,26 @@ function filterArr(array1,guessWord,guessResult){  // EVERY ODD PRESS from insid
     //This method moves the data from array 2 to array 1, wiping array 2 afterwards.
 
 
-        // Move data from arr2 to arr1, wiping contents before and after
-        wordArray=[]; // wipe previous list of words
-        words254.forEach(wdee => {
+    // Move data from arr2 to arr1, wiping contents before and after
+    wordArray=[]; // wipe previous list of words
+    words254.forEach(wdee => {
             wordArray.push(wdee); // assign new list to old list array variable
-        });
-        words254=[]; // wipe the temprary array for use next time.
+    });
+    words254=[]; // wipe the temprary array for use next time.
 
-
-        //output the results
-        output.innerHTML=`<div id="output">`+"List of potential words: "+wordArray
-        +`</div>`; // output
+    //output the results
+    output.innerHTML=`<div id="output">`+"List of potential words: "+wordArray
+    +`</div>`; // output
 
         
 
 }
+
+function greenTest(word, col){
+
+
+}
+
+
+// This is the main method call.
+Initialize()
