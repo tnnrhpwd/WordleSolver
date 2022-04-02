@@ -292,7 +292,7 @@ function pressButton(){ //EVERY BUTTON PRESS
         // Stores the guess from the textbox
         guessWord=inputString.toUpperCase(); 
 
-        // Display text for Odd button press input
+        // Display text for Even button press input
         instruction.innerHTML = `<div id="description">`+"Enter the #"+wordNum+" word results replacing green, orange, and black with 123 respectively."
         +`</div>`; // instruction
 
@@ -308,7 +308,7 @@ function pressButton(){ //EVERY BUTTON PRESS
         // Removes bad words from returned array
         filterArr(wordArray,guessWord,guessResult); 
 
-        // Display text for Even button press input
+        // Display text for odd button press input
         instruction.innerHTML = `<div id="description">`+"Enter the #"+wordNum+" word."
         +`</div>`; // instruction
     }
@@ -324,7 +324,7 @@ function pressButton(){ //EVERY BUTTON PRESS
 };
 
 // This function filters an array using a guess and result, printing the results
-function filterArr(array1,guessWord,guessResult){  // EVERY ODD PRESS from inside pressButton()
+function filterArr(array1,guessWord,guessResult){  // EVERY EVEN PRESS from inside pressButton()
     // temporary array that stores potential words
     let words254=[]; 
     // list of characters definitely in the answer
@@ -409,7 +409,6 @@ function filterArr(array1,guessWord,guessResult){  // EVERY ODD PRESS from insid
     words254.forEach(wdee => {
             wordArray.push(wdee); 
     });
-    words254=[]; // wipe the temporary array for use next time.
 
     //output the results
     output.innerHTML=`<div id="output">`+"List of potential words: "+wordArray
