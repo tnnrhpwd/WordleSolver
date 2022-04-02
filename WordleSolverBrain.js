@@ -393,40 +393,28 @@ function filterArr(array1,guessWord,guessResult){  // EVERY ODD PRESS from insid
                                 listLetterCount++;
                             }
                         }
-                        // if the count of certain character is the same in the guess and the potential word, let the word 
+                        // if the count of that certain character is the same in the guess and potenial word
                         if(guessLetterCount==listLetterCount){;}else{blackTest=false;}
-                    } else {blackTest=false;} // if blacked letter is not also orange/green, fail word.
+                    // if blacked letter is not also orange/green, fail word.
+                    } else {blackTest=false;} 
                 }
             }
-            
         }
+        // If the potential word passes all the tests, add it to the temporary array
         if(greenTest&&orangeTest&&blackTest) {words254.push(word);}
-        
-        
     });
-    //This method moves the data from array 2 to array 1, wiping array 2 afterwards.
-
-
-    // Move data from arr2 to arr1, wiping contents before and after
-    wordArray=[]; // wipe previous list of words
+    
+    wordArray=[]; // wipe old list of words
+    // Move the words from the temporary array to wordArray
     words254.forEach(wdee => {
-            wordArray.push(wdee); // assign new list to old list array variable
+            wordArray.push(wdee); 
     });
-    words254=[]; // wipe the temprary array for use next time.
+    words254=[]; // wipe the temporary array for use next time.
 
     //output the results
     output.innerHTML=`<div id="output">`+"List of potential words: "+wordArray
     +`</div>`; // output
-
-        
-
 }
-
-function greenTest(word, col){
-
-
-}
-
 
 // This is the main method call.
 Initialize()
