@@ -14,5 +14,6 @@ The guess word is typed into the textbox. Either press the Run button or press y
 Press run or your Enter key again. The list of potential words is printed. Type one of these words into the textbox and your game. 
 Repeat these steps until you either win or lose your game.
 
+The application works by filling an array with a list of potential words on the first button press. Then, on even even button press, passing words are added to a temporary array from the intial array. The initial array is emptied and filled with the temporary array data. Lastly, the initial array is outputed to the html, displaying the list of potential words.
 
 [View website](https://sthopwood.weebly.com/wordlesolver.html)
